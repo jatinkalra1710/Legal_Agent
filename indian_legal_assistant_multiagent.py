@@ -266,7 +266,7 @@ def call_gemini_api(api_key, prompt, system_instruction="", image_data=None, ima
         
         # Use Gemini 2.5 Flash
         model = genai.GenerativeModel(
-            model_name='gemini-2.0-flash-exp',
+            model_name='gemini-2.5-flash',
             system_instruction=system_instruction
         )
         
