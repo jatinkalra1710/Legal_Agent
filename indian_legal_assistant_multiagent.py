@@ -11,7 +11,6 @@ import time
 # Page configuration
 st.set_page_config(
     page_title="Indian Legal Document Assistant - Multi-Agent",
-    page_icon="⚖️",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -99,9 +98,9 @@ st.markdown("""
 # Title and header
 st.markdown("""
     <div class="info-card">
-        <h1>⚖️ Indian Legal Document Assistant - Multi-Agent AI</h1>
+        <h1>Indian Legal Document Assistant - Multi-Agent AI</h1>
         <p style="text-align: center; font-size: 1.1rem; margin: 0;">
-            Advanced Multi-Agent System with OCR • Powered by Google Gemini 2.5 Flash
+            Advanced Multi-Agent System with OCR
         </p>
     </div>
 """, unsafe_allow_html=True)
@@ -123,18 +122,9 @@ st.markdown("""
 
 # Sidebar with information
 with st.sidebar:
-    st.header("🤖 Multi-Agent System")
-    st.write("""
-    This advanced system uses **5 specialized AI agents** working together:
+    st.header("Multi-Agent System")
     
-    1. **📸 OCR Agent** - Extracts text from images
-    2. **🔍 Classification Agent** - Identifies document type
-    3. **📋 Extraction Agent** - Pulls key information
-    4. **⚖️ Legal Analysis Agent** - Interprets legal content
-    5. **💡 Simplification Agent** - Converts to simple language
-    """)
-    
-    st.header("📄 Supported Formats")
+    st.header("📄Supported Formats")
     st.write("- PDF Documents")
     st.write("- Images (JPG, PNG, JPEG) with OCR")
     
@@ -146,12 +136,12 @@ with st.sidebar:
     )
     
     if gemini_api_key:
-        st.success("✅ API Key configured")
+        st.success("API Key configured")
     else:
-        st.warning("⚠️ Please enter your Gemini API key")
+        st.warning("Please enter your Gemini API key")
         st.info("Get it free at: https://ai.google.dev/")
     
-    st.header("📚 Document Types")
+    st.header("Document Types")
     st.write("""
     - GST Notices & Circulars
     - Income Tax Notices
@@ -166,7 +156,7 @@ with st.sidebar:
 col1, col2 = st.columns([1, 1])
 
 with col1:
-    st.subheader("📤 Upload Your Document")
+    st.subheader("Upload Your Document")
     uploaded_file = st.file_uploader(
         "Choose a legal document (PDF or Image)",
         type=['pdf', 'png', 'jpg', 'jpeg'],
@@ -174,7 +164,7 @@ with col1:
     )
     
     if uploaded_file:
-        st.success(f"✅ File uploaded: {uploaded_file.name}")
+        st.success(f"File uploaded: {uploaded_file.name}")
         
         # Show file details
         file_size = len(uploaded_file.getvalue()) / 1024
@@ -186,7 +176,7 @@ with col1:
             st.image(uploaded_file, caption="Document Preview", use_container_width=True)
 
 with col2:
-    st.subheader("🎯 Analysis Options")
+    st.subheader("Analysis Options")
     
     language = st.selectbox(
         "Preferred explanation language",
@@ -291,14 +281,14 @@ def ocr_agent(file_content, file_type, use_ocr):
     if not use_ocr or file_type == "application/pdf":
         return None
     
-    st.markdown('<div class="agent-progress">🤖 **OCR Agent** is processing your image...</div>', unsafe_allow_html=True)
+    st.markdown('<div class="agent-progress">**OCR Agent** is processing your image...</div>', unsafe_allow_html=True)
     
     extracted_text = extract_text_with_ocr(file_content)
     
     if extracted_text:
         st.markdown(f'''
         <div class="agent-result">
-            <h4>✅ OCR Agent - Text Extraction Complete</h4>
+            <h4>OCR Agent - Text Extraction Complete</h4>
             <p><strong>Extracted {len(extracted_text)} characters</strong></p>
             <details>
                 <summary>View extracted text</summary>
@@ -309,7 +299,7 @@ def ocr_agent(file_content, file_type, use_ocr):
     else:
         st.markdown('''
         <div class="ocr-status">
-            ℹ️ OCR not available. Install pytesseract or easyocr for text extraction from images.
+            OCR not available. Install pytesseract or easyocr for text extraction from images.
             Continuing with image analysis...
         </div>
         ''', unsafe_allow_html=True)
@@ -319,7 +309,7 @@ def ocr_agent(file_content, file_type, use_ocr):
 # Agent 2: Classification Agent
 def classification_agent(api_key, file_content, file_type, ocr_text=None):
     """Agent 2: Classify document type"""
-    st.markdown('<div class="agent-progress">🤖 **Classification Agent** is identifying document type...</div>', unsafe_allow_html=True)
+    st.markdown('<div class="agent-progress">**Classification Agent** is identifying document type...</div>', unsafe_allow_html=True)
     
     system_instruction = """You are a legal document classification expert specializing in Indian laws.
 Your task is to identify the type of legal document and categorize it accurately.
@@ -361,7 +351,7 @@ Be concise but accurate."""
     
     st.markdown(f'''
     <div class="agent-result">
-        <h4>✅ Classification Agent - Document Identified</h4>
+        <h4>Classification Agent - Document Identified</h4>
         <div>{result}</div>
     </div>
     ''', unsafe_allow_html=True)
@@ -371,7 +361,7 @@ Be concise but accurate."""
 # Agent 3: Content Extraction Agent
 def extraction_agent(api_key, file_content, file_type, classification, ocr_text=None):
     """Agent 3: Extract key information from document"""
-    st.markdown('<div class="agent-progress">🤖 **Extraction Agent** is pulling key information...</div>', unsafe_allow_html=True)
+    st.markdown('<div class="agent-progress">**Extraction Agent** is pulling key information...</div>', unsafe_allow_html=True)
     
     system_instruction = """You are a legal information extraction expert for Indian legal documents.
 Your task is to extract key structured information from legal documents including:
@@ -410,7 +400,7 @@ Present in a structured format. Mark items as "Not Found" if not present."""
     
     st.markdown(f'''
     <div class="agent-result">
-        <h4>✅ Extraction Agent - Key Information Retrieved</h4>
+        <h4>Extraction Agent - Key Information Retrieved</h4>
         <div>{result}</div>
     </div>
     ''', unsafe_allow_html=True)
@@ -532,7 +522,7 @@ def multi_agent_analysis(api_key, file_content, file_name, file_type, language, 
     
     results = {}
     
-    st.markdown("## 🤖 Multi-Agent Analysis in Progress")
+    st.markdown("## Multi-Agent Analysis in Progress")
     st.markdown("---")
     
     # Agent 1: OCR (if image and OCR enabled)
@@ -559,7 +549,7 @@ def multi_agent_analysis(api_key, file_content, file_name, file_type, language, 
     
     # Agent 5: Simplification
     st.markdown("---")
-    st.markdown("## 📝 Final Analysis - Simple Language Explanation")
+    st.markdown("## Final Analysis - Simple Language Explanation")
     simplified = simplification_agent(api_key, classification, extraction, legal_analysis, language, include_actions)
     results['simplified'] = simplified
     
@@ -570,7 +560,7 @@ if uploaded_file and gemini_api_key:
     st.markdown("---")
     
     if st.button("🚀 Start Multi-Agent Analysis", key="analyze_btn"):
-        with st.spinner("🔄 Multi-Agent system working... This may take 30-60 seconds..."):
+        with st.spinner("Multi-Agent system working... This may take 30-60 seconds..."):
             # Get file content
             file_content = uploaded_file.getvalue()
             file_type = uploaded_file.type
@@ -594,7 +584,7 @@ if uploaded_file and gemini_api_key:
             st.markdown('</div>', unsafe_allow_html=True)
             
             # Additional disclaimer after results
-            st.warning("⚠️ **Reminder**: This is an AI-generated analysis from multiple AI agents. Please consult a qualified lawyer for official legal advice.")
+            st.warning("**Reminder**: This is an AI-generated analysis from multiple AI agents. Please consult a qualified lawyer for official legal advice.")
             
             # Download options
             col1, col2 = st.columns(2)
@@ -652,8 +642,8 @@ This analysis is for informational purposes only.
                 )
 
 elif uploaded_file and not gemini_api_key:
-    st.error("⚠️ Please enter your Google Gemini API key in the sidebar to continue.")
-    st.info("👉 Get your free API key at: https://ai.google.dev/")
+    st.error("Please enter your Google Gemini API key in the sidebar to continue.")
+    st.info("Get your free API key at: https://ai.google.dev/")
 
 # Footer
 st.markdown("---")
